@@ -12,13 +12,14 @@ Vagrant.configure("2") do |config|
     cclaudeS.vm.synced_folder "data/", "/data"
     cclaudeS.vm.provider "virtualbox" do |vb|
       vb.name = "cclaudeS"
-      vb.cpus = 2
-      vb.memory = 1024
+      vb.cpus = 4
+      vb.memory = 2048
     end
     cclaudeS.vm.provision :shell, inline: <<-SHELL
       sudo apt update && sudo apt install curl -qqy
       curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-external-ip=192.168.56.110" K3S_TOKEN=verysecret sh -s -
-      export MANIFOLD=/var/lib/rancher/k3s/server/manifests/ && sudo mkdir $MANIFOLD && sudo cp /data/* $MANIFOLD
+      k3s kubectl apply -f /data/one.yaml && k3s kubectl apply -f /data/two.yaml && k3s kubectl apply -f /data/three.yaml
+    #   export MANIFOLD=/var/lib/rancher/k3s/server/manifests/ && sudo mkdir $MANIFOLD && sudo cp /data/* $MANIFOLD
     #   curl -sfL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
     #   export KUBECONFIG=/home/vagrant/.kube/config.yaml && sudo k3s kubectl config view --raw > $KUBECONFIG && chmod 600 $KUBECONFIG
     #   helm install --create-namespace --namespace hello-kubernetes hello-world ./hello-kubernetes
@@ -32,3 +33,8 @@ end
 
 # git clone https://github.com/paulbouwer/hello-kubernetes.git
 # helm template ./hello-kubernetes/deploy/helm/hello-kubernetes/
+
+
+# sudo k3s kubectl get all
+# sudo k3s kubectl get ingress
+# sudo k3s kubectl describe ingress -A
