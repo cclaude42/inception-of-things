@@ -1,32 +1,37 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: funny-ingress
+  name: custom-ingress
   annotations:
     kubernetes.io/ingress.class: "traefik"
-    traefik.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http:
+  - host: "app1.com"
+    http:
       paths:
-      - path: /first
+      - path: "/"
         pathType: Prefix
         backend:
           service:
             name: app-one
             port:
               number: 80
-      - path: /second
-        pathType: Prefix
-        backend:
-          service:
-            name: app-two
-            port:
-              number: 80
-      - path: /third
+  - host: "app3.com"
+    http:
+      paths:
+      - path: "/"
         pathType: Prefix
         backend:
           service:
             name: app-three
+            port:
+              number: 80
+  - http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: app-two
             port:
               number: 80
