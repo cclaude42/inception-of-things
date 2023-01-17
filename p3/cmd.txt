@@ -1,0 +1,6 @@
+sudo k3d cluster create mycluster -p 8080:80@loadbalancer
+sudo kubectl create namespace argocd
+sudo kubectl apply -f argocd.yaml
+sudo kubectl port-forward service/argocd-server -n argocd 8090:443 --address 0.0.0.0
+
+sudo kubectl create namespace dev
