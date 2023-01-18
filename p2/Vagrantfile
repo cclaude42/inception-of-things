@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
     cclaudeS.vm.box = "debian/bullseye64"
     cclaudeS.vm.hostname = "cclaudeS"
     cclaudeS.vm.network "private_network", ip: "192.168.56.110", bridge: "eth1"
-    cclaudeS.vm.synced_folder "./data/", "/data"
+    cclaudeS.vm.synced_folder "./confs/", "/confs"
     cclaudeS.vm.provider "virtualbox" do |vb|
       vb.name = "cclaudeS"
       vb.cpus = 4
@@ -27,10 +27,10 @@ Vagrant.configure("2") do |config|
     cclaudeS.vm.provision :shell, inline: <<-SHELL
       sudo apt update && sudo apt install curl -qqy
       curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-external-ip=192.168.56.110" K3S_TOKEN=verysecret sh -s -
-      k3s kubectl apply -f /data/one.yaml
-      k3s kubectl apply -f /data/two.yaml
-      k3s kubectl apply -f /data/three.yaml
-      k3s kubectl apply -f /data/ingress.yaml
+      k3s kubectl apply -f /confs/one.yaml
+      k3s kubectl apply -f /confs/two.yaml
+      k3s kubectl apply -f /confs/three.yaml
+      k3s kubectl apply -f /confs/ingress.yaml
     SHELL
   end
 
