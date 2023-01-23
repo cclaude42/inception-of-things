@@ -8,4 +8,4 @@ echo
 echo
 
 # Access Argo CD
-sudo kubectl port-forward service/argocd-server -n argocd 8060:443 --address 0.0.0.0
+sudo kubectl port-forward service/argocd-server -n argocd 8090:443 --address 0.0.0.0
