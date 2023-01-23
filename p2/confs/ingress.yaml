@@ -16,14 +16,14 @@ spec:
             name: app-one
             port:
               number: 80
-  - host: "app3.com"
+  - host: "app2.com"
     http:
       paths:
       - path: "/"
         pathType: Prefix
         backend:
           service:
-            name: app-three
+            name: app-two
             port:
               number: 80
   - http:
@@ -32,6 +32,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: app-two
+            name: app-three
             port:
               number: 80
